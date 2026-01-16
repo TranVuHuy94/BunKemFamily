@@ -588,6 +588,116 @@
             }
         }
 
+        /* Heart Explosion Effect */
+        .heart-explosion {
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 10000;
+            animation: heart-explode 1.5s ease-out forwards;
+        }
+
+        @keyframes heart-explode {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(0.5) rotate(0deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--rot));
+            }
+        }
+
+        /* Page Transition Overlay */
+        .page-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender), var(--mint));
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .page-transition.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .page-transition-content {
+            text-align: center;
+            animation: bounce-in 0.5s ease;
+        }
+
+        .page-transition-emoji {
+            font-size: 6rem;
+            animation: spin-scale 1s ease infinite;
+        }
+
+        .page-transition-text {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.5rem;
+            color: white;
+            margin-top: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes spin-scale {
+
+            0%,
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+
+            25% {
+                transform: scale(1.1) rotate(-10deg);
+            }
+
+            75% {
+                transform: scale(1.1) rotate(10deg);
+            }
+        }
+
+        /* Card Click Animation */
+        .memory-card.clicking {
+            animation: card-click 0.3s ease;
+        }
+
+        @keyframes card-click {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.95);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .title {
@@ -707,7 +817,8 @@
 
         <div class="memory-grid">
             <!-- Memory Card 1 - Ngày Hana ra đời -->
-            <article class="memory-card fade-in delay-2">
+            <article class="memory-card fade-in delay-2"
+                data-href="./HanaDay1/qua-trinh-sinh-Hana/hana-website-static.html">
                 <div class="card-image-placeholder" style="background: linear-gradient(135deg, #FFE5EC, #FFF0F5);">
                     <span>👶</span>
                 </div>
@@ -721,14 +832,14 @@
                         Những khoảnh khắc thiêng liêng và cảm xúc khi Hana chào đời.
                         Hành trình vượt cạn đầy can đảm của mẹ và sự kỳ diệu của sự sống.
                     </p>
-                    <a href="./HanaDay1/qua-trinh-sinh-Hana/hana-website-static.html" class="card-button">
+                    <span class="card-button">
                         Xem kỷ niệm
-                    </a>
+                    </span>
                 </div>
             </article>
 
             <!-- Memory Card 2 - Thư gửi mẹ -->
-            <article class="memory-card fade-in delay-3">
+            <article class="memory-card fade-in delay-3" data-href="./HanaDay1/thu-gui-me-Kem/">
                 <div class="card-image-placeholder" style="background: linear-gradient(135deg, #E8F4FD, #F0F8FF);">
                     <span>💌</span>
                 </div>
@@ -742,14 +853,14 @@
                         Những lời yêu thương và biết ơn dành cho người mẹ tuyệt vời
                         đã mang Hana đến với thế giới này.
                     </p>
-                    <a href="./HanaDay1/thu-gui-me-Kem/" class="card-button">
+                    <span class="card-button">
                         Xem kỷ niệm
-                    </a>
+                    </span>
                 </div>
             </article>
 
             <!-- Memory Card 3 - 1 Month -->
-            <article class="memory-card fade-in delay-4">
+            <article class="memory-card fade-in delay-4" data-href="./1-month/">
                 <div class="card-image-placeholder" style="background: linear-gradient(135deg, #FFF3E0, #FFF8E1);">
                     <span>🎂</span>
                 </div>
@@ -763,9 +874,9 @@
                         Kỷ niệm đáng nhớ khi Hana tròn 1 tháng tuổi.
                         Những thay đổi đáng yêu và khoảnh khắc ngọt ngào.
                     </p>
-                    <a href="./1-month/" class="card-button">
+                    <span class="card-button">
                         Sắp có...
-                    </a>
+                    </span>
                 </div>
             </article>
 
@@ -792,6 +903,14 @@
             </p>
         </div>
     </footer>
+
+    <!-- Page Transition Overlay -->
+    <div class="page-transition" id="pageTransition">
+        <div class="page-transition-content">
+            <div class="page-transition-emoji">🌸</div>
+            <div class="page-transition-text">Đang mở kỷ niệm...</div>
+        </div>
+    </div>
 
     <script>
         // Create floating elements
@@ -889,6 +1008,82 @@
 
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
+        });
+
+        // Heart Explosion Effect
+        function createHeartExplosion(x, y) {
+            const hearts = ['💖', '💕', '💗', '💓', '💝', '🌸', '✨', '⭐', '🎀', '💫'];
+            const count = 15;
+
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-explosion';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = x + 'px';
+                heart.style.top = y + 'px';
+
+                // Random direction for explosion
+                const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+                const distance = 80 + Math.random() * 120;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance - 50; // Slight upward bias
+                const rot = (Math.random() - 0.5) * 720;
+
+                heart.style.setProperty('--tx', tx + 'px');
+                heart.style.setProperty('--ty', ty + 'px');
+                heart.style.setProperty('--rot', rot + 'deg');
+                heart.style.animationDelay = (i * 0.03) + 's';
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 1500);
+            }
+        }
+
+        // Card Click Handler
+        document.querySelectorAll('.memory-card[data-href]').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                const href = card.getAttribute('data-href');
+                if (!href) return;
+
+                // Get click position
+                const rect = card.getBoundingClientRect();
+                const clickX = e.clientX || (rect.left + rect.width / 2);
+                const clickY = e.clientY || (rect.top + rect.height / 2);
+
+                // Add click animation to card
+                card.classList.add('clicking');
+
+                // Create heart explosion
+                createHeartExplosion(clickX, clickY);
+
+                // Create additional sparkles around the card
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        createSparkle(
+                            rect.left + Math.random() * rect.width,
+                            rect.top + Math.random() * rect.height + window.scrollY
+                        );
+                    }, i * 50);
+                }
+
+                // Show page transition after a short delay
+                setTimeout(() => {
+                    document.getElementById('pageTransition').classList.add('active');
+                }, 400);
+
+                // Navigate after animation
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 900);
+            });
+
+            // Remove click animation class after it's done
+            card.addEventListener('animationend', () => {
+                card.classList.remove('clicking');
+            });
         });
     </script>
 </body>
