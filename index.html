@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Hana's Memories - Kỷ Niệm Của Hana 🌸</title>
+    <meta name="description" content="Trang lưu giữ những kỷ niệm đáng yêu của bé Hana - Memories of our beloved Hana">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Baloo+2:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-pink: #FF6B9D;
+            --soft-pink: #FFB3C6;
+            --lavender: #C9B1FF;
+            --mint: #98E4C1;
+            --peach: #FFD4A3;
+            --sky-blue: #A8D8FF;
+            --cream: #FFF8F3;
+            --text-dark: #5D4E6D;
+            --text-light: #8B7A9E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #FFF0F5 0%, #F0F8FF 50%, #FFF5EE 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating Elements Animation */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-heart,
+        .floating-star,
+        .floating-flower {
+            position: absolute;
+            animation: float-up 15s infinite linear;
+            opacity: 0.6;
+            font-size: 1.5rem;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkle Animation */
+        .sparkle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #FFD700 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+
+            0%,
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Header Section */
+        header {
+            position: relative;
+            text-align: center;
+            padding: 60px 20px 40px;
+            z-index: 1;
+        }
+
+        .logo-container {
+            display: inline-block;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .logo-ring {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-pink), var(--lavender), var(--mint), var(--peach));
+            background-size: 400% 400%;
+            animation: gradient-rotate 4s ease infinite, pulse 2s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(255, 107, 157, 0.3);
+        }
+
+        @keyframes gradient-rotate {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .logo-inner {
+            width: 130px;
+            height: 130px;
+            background: var(--cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--primary-pink), var(--lavender));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 0 rgba(255, 179, 198, 0.3);
+            margin-bottom: 10px;
+            animation: title-bounce 3s ease-in-out infinite;
+        }
+
+        @keyframes title-bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .subtitle span {
+            display: inline-block;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Decorative Cloud */
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: cloud-float 20s infinite linear;
+        }
+
+        @keyframes cloud-float {
+            0% {
+                transform: translateX(-100px);
+            }
+
+            100% {
+                transform: translateX(calc(100vw + 100px));
+            }
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title h2::before,
+        .section-title h2::after {
+            content: '✿';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            animation: spin 4s linear infinite;
+        }
+
+        .section-title h2::before {
+            left: -40px;
+        }
+
+        .section-title h2::after {
+            right: -40px;
+        }
+
+        @keyframes spin {
+            from {
+                transform: translateY(-50%) rotate(0deg);
+            }
+
+            to {
+                transform: translateY(-50%) rotate(360deg);
+            }
+        }
+
+        /* Memory Grid */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        /* Memory Card */
+        .memory-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(147, 112, 219, 0.15);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .memory-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-pink), var(--lavender), var(--mint), var(--peach), var(--sky-blue));
+            background-size: 200% 100%;
+            animation: rainbow-border 3s linear infinite;
+        }
+
+        @keyframes rainbow-border {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        .memory-card:hover {
+            transform: translateY(-15px) scale(1.02) rotate(1deg);
+            box-shadow: 0 25px 80px rgba(255, 107, 157, 0.25);
+        }
+
+        .memory-card:hover .card-emoji {
+            transform: scale(1.3) rotate(15deg);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            position: relative;
+        }
+
+        .card-image-placeholder {
+            width: 100%;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image-placeholder::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, var(--soft-pink), var(--lavender), var(--mint), var(--peach), var(--sky-blue), var(--soft-pink));
+            animation: rotate-bg 10s linear infinite;
+        }
+
+        @keyframes rotate-bg {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .card-image-placeholder span {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 50%;
+        }
+
+        .memory-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 25px;
+            position: relative;
+        }
+
+        .card-emoji {
+            position: absolute;
+            top: -30px;
+            right: 25px;
+            font-size: 3rem;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card-date {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--soft-pink), var(--lavender));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .card-description {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary-pink), var(--lavender));
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.3);
+        }
+
+        .card-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .card-button::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .card-button:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* Coming Soon Card */
+        .coming-soon {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 240, 245, 0.8));
+            border: 3px dashed var(--soft-pink);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .coming-soon:hover {
+            border-color: var(--primary-pink);
+        }
+
+        .coming-soon-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .coming-soon h3 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.8rem;
+            color: var(--primary-pink);
+            margin-bottom: 10px;
+        }
+
+        .coming-soon p {
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 10px 40px rgba(147, 112, 219, 0.1);
+        }
+
+        .family-love {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .footer-text {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .footer-subtext {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .heart-beat {
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.1);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+
+            75% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Mouse Trail Effect */
+        .trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            z-index: 9999;
+            border-radius: 50%;
+            animation: trail-fade 1s forwards;
+        }
+
+        @keyframes trail-fade {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .memory-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .section-title h2::before,
+            .section-title h2::after {
+                display: none;
+            }
+        }
+
+        /* Page Load Animation */
+        .fade-in {
+            animation: fade-in 1s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.8s;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--cream);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--soft-pink), var(--lavender));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--primary-pink), var(--lavender));
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating Background Elements -->
+    <div class="floating-elements" id="floatingElements"></div>
+
+    <!-- Sparkles Container -->
+    <div id="sparkles"></div>
+
+    <!-- Header -->
+    <header class="fade-in">
+        <div class="logo-container">
+            <div class="logo-ring">
+                <div class="logo-inner">🌸</div>
+            </div>
+        </div>
+        <h1 class="title">Hana's Memories</h1>
+        <p class="subtitle">
+            <span style="animation-delay: 0s;">✨</span>
+            <span style="animation-delay: 0.1s;">K</span>
+            <span style="animation-delay: 0.15s;">ỷ</span>
+            <span style="animation-delay: 0.2s;"> </span>
+            <span style="animation-delay: 0.25s;">N</span>
+            <span style="animation-delay: 0.3s;">i</span>
+            <span style="animation-delay: 0.35s;">ệ</span>
+            <span style="animation-delay: 0.4s;">m</span>
+            <span style="animation-delay: 0.45s;"> </span>
+            <span style="animation-delay: 0.5s;">Đ</span>
+            <span style="animation-delay: 0.55s;">á</span>
+            <span style="animation-delay: 0.6s;">n</span>
+            <span style="animation-delay: 0.65s;">g</span>
+            <span style="animation-delay: 0.7s;"> </span>
+            <span style="animation-delay: 0.75s;">Y</span>
+            <span style="animation-delay: 0.8s;">ê</span>
+            <span style="animation-delay: 0.85s;">u</span>
+            <span style="animation-delay: 0.9s;">✨</span>
+        </p>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="section-title fade-in delay-1">
+            <h2>📖 Những Trang Kỷ Niệm</h2>
+        </div>
+
+        <div class="memory-grid">
+            <!-- Memory Card 1 - Ngày Hana ra đời -->
+            <article class="memory-card fade-in delay-2">
+                <div class="card-image-placeholder" style="background: linear-gradient(135deg, #FFE5EC, #FFF0F5);">
+                    <span>👶</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-emoji">🎀</div>
+                    <div class="card-date">
+                        <span>📅</span> Ngày đầu tiên
+                    </div>
+                    <h3 class="card-title">Hành Trình Chào Đón Hana</h3>
+                    <p class="card-description">
+                        Những khoảnh khắc thiêng liêng và cảm xúc khi Hana chào đời.
+                        Hành trình vượt cạn đầy can đảm của mẹ và sự kỳ diệu của sự sống.
+                    </p>
+                    <a href="./HanaDay1/qua-trinh-sinh-Hana/hana-website-static.html" class="card-button">
+                        Xem kỷ niệm
+                    </a>
+                </div>
+            </article>
+
+            <!-- Memory Card 2 - Thư gửi mẹ -->
+            <article class="memory-card fade-in delay-3">
+                <div class="card-image-placeholder" style="background: linear-gradient(135deg, #E8F4FD, #F0F8FF);">
+                    <span>💌</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-emoji">💝</div>
+                    <div class="card-date">
+                        <span>📅</span> Ngày đầu tiên
+                    </div>
+                    <h3 class="card-title">Thư Gửi Mẹ Kem</h3>
+                    <p class="card-description">
+                        Những lời yêu thương và biết ơn dành cho người mẹ tuyệt vời
+                        đã mang Hana đến với thế giới này.
+                    </p>
+                    <a href="./HanaDay1/thu-gui-me-Kem/" class="card-button">
+                        Xem kỷ niệm
+                    </a>
+                </div>
+            </article>
+
+            <!-- Memory Card 3 - 1 Month -->
+            <article class="memory-card fade-in delay-4">
+                <div class="card-image-placeholder" style="background: linear-gradient(135deg, #FFF3E0, #FFF8E1);">
+                    <span>🎂</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-emoji">🌟</div>
+                    <div class="card-date">
+                        <span>📅</span> Tròn 1 tháng
+                    </div>
+                    <h3 class="card-title">Hana Tròn 1 Tháng Tuổi</h3>
+                    <p class="card-description">
+                        Kỷ niệm đáng nhớ khi Hana tròn 1 tháng tuổi.
+                        Những thay đổi đáng yêu và khoảnh khắc ngọt ngào.
+                    </p>
+                    <a href="./1-month/" class="card-button">
+                        Sắp có...
+                    </a>
+                </div>
+            </article>
+
+            <!-- Coming Soon Card -->
+            <article class="memory-card coming-soon fade-in delay-4">
+                <div class="coming-soon-icon">📸</div>
+                <h3>Những Kỷ Niệm Sắp Tới...</h3>
+                <p>Nhiều khoảnh khắc đáng yêu đang chờ được ghi lại</p>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content fade-in delay-4">
+            <div class="family-love">
+                👨‍👩‍👧
+            </div>
+            <p class="footer-text">
+                Được tạo với <span class="heart-beat">❤️</span> bởi Ba
+            </p>
+            <p class="footer-subtext">
+                Gia đình Bún Kem • Hana - Cô Bé Hoa Anh Đào 🌸
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Create floating elements
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const elements = ['💖', '⭐', '🌸', '✨', '🎀', '💕', '🌷', '🦋', '🌈', '☁️'];
+
+            for (let i = 0; i < 30; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-heart';
+                element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                element.style.left = Math.random() * 100 + '%';
+                element.style.animationDelay = Math.random() * 15 + 's';
+                element.style.animationDuration = (15 + Math.random() * 10) + 's';
+                element.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+                container.appendChild(element);
+            }
+        }
+
+        // Create sparkles effect
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+            document.getElementById('sparkles').appendChild(sparkle);
+
+            setTimeout(() => sparkle.remove(), 2000);
+        }
+
+        // Mouse trail effect
+        const colors = ['#FF6B9D', '#C9B1FF', '#98E4C1', '#FFD4A3', '#A8D8FF'];
+        let lastTrailTime = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            const now = Date.now();
+            if (now - lastTrailTime < 50) return;
+            lastTrailTime = now;
+
+            const trail = document.createElement('div');
+            trail.className = 'trail';
+            trail.style.left = e.pageX - 10 + 'px';
+            trail.style.top = e.pageY - 10 + 'px';
+            trail.style.background = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(trail);
+
+            setTimeout(() => trail.remove(), 1000);
+
+            // Random sparkle
+            if (Math.random() > 0.8) {
+                createSparkle(e.pageX + (Math.random() - 0.5) * 50, e.pageY + (Math.random() - 0.5) * 50);
+            }
+        });
+
+        // Card hover sparkle effect
+        document.querySelectorAll('.memory-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                for (let i = 0; i < 5; i++) {
+                    const rect = card.getBoundingClientRect();
+                    setTimeout(() => {
+                        createSparkle(
+                            rect.left + Math.random() * rect.width,
+                            rect.top + Math.random() * rect.height + window.scrollY
+                        );
+                    }, i * 100);
+                }
+            });
+        });
+
+        // Initialize
+        createFloatingElements();
+
+        // Add random sparkles periodically
+        setInterval(() => {
+            createSparkle(
+                Math.random() * window.innerWidth,
+                Math.random() * window.innerHeight
+            );
+        }, 500);
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+</html>
