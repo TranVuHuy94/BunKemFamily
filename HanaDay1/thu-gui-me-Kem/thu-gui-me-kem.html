@@ -6,395 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gửi Mẹ - Từ Ba và Hana</title>
 
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-pink': '#FF6B9D',
+                        'soft-pink': '#FFB3C6',
+                        'lavender': '#C9B1FF',
+                        'mint': '#98E4C1',
+                        'peach': '#FFD4A3',
+                        'paper-cream': '#faf6f0',
+                        'ink-primary': '#3d3730',
+                    },
+                    fontFamily: {
+                        'display': ['"Baloo 2"', 'cursive'],
+                        'body': ['"Quicksand"', 'sans-serif'],
+                        'hand': ['"Dancing Script"', 'cursive'],
+                        'serif': ['"Cormorant Garamond"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+JP:wght@400;500;600&family=Baloo+2:wght@400;500;600&family=Quicksand:wght@300;400;500;600&display=swap"
         rel="stylesheet">
 
-    <style>
-        :root {
-            --paper-cream: #faf6f0;
-            --paper-aged: #f5ede0;
-            --ink-primary: #3d3730;
-            --ink-light: #6b6158;
-            --accent-rose: #d4a5a5;
-            --accent-rose-deep: #c48b8b;
-            --accent-gold: #c9a962;
-            --highlight-soft: rgba(212, 165, 165, 0.2);
-        }
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../assets/css/shared.css">
+    <link rel="stylesheet" href="../../assets/css/letter.css">
 
-        body {
-            font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
-            background: var(--paper-cream);
-            color: var(--ink-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Paper texture overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image:
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.03;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        /* Fold line effect */
-        .fold-line {
-            position: fixed;
-            top: 0;
-            left: 50%;
-            width: 1px;
-            height: 100%;
-            background: linear-gradient(to bottom,
-                    transparent 0%,
-                    rgba(0, 0, 0, 0.03) 20%,
-                    rgba(0, 0, 0, 0.05) 50%,
-                    rgba(0, 0, 0, 0.03) 80%,
-                    transparent 100%);
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 60px 40px 100px;
-            position: relative;
-        }
-
-        /* Date header */
-        .letter-date {
-            font-family: 'Caveat', cursive;
-            font-size: 1.3rem;
-            color: var(--ink-light);
-            text-align: right;
-            margin-bottom: 50px;
-            opacity: 0;
-            /* Controlled by JS */
-        }
-
-        /* Letter greeting */
-        .greeting {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.2rem;
-            font-weight: 600;
-            color: var(--accent-rose-deep);
-            margin-bottom: 40px;
-            opacity: 0;
-            /* Controlled by JS */
-        }
-
-        /* Letter body paragraphs */
-        .letter-body {
-            line-height: 2.2;
-            font-size: 1.25rem;
-        }
-
-        .letter-body p {
-            margin-bottom: 30px;
-            opacity: 0;
-            /* Controlled by JS */
-            text-align: justify;
-            text-indent: 2em;
-        }
-
-        /* Animations removed for JS typewriter effect */
-        /* .letter-body p:nth-child(1) {
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 1s;
-        }
-
-        .letter-body p:nth-child(2) {
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 1.5s;
-        }
-
-        .letter-body p:nth-child(3) {
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 2s;
-        }
-
-        .letter-body p:nth-child(4) {
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 2.5s;
-        }
-
-        .letter-body p:nth-child(5) {
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 3s;
-        }
-
-        .letter-body p:nth-child(6) {
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 3.5s;
-        }
-
-        .letter-body p:nth-child(7) {
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 4s;
-        } */
-
-        /* Highlighted numbers */
-        .highlight-number {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 600;
-            font-size: 1.4em;
-            color: var(--accent-rose-deep);
-            background: var(--highlight-soft);
-            padding: 2px 8px;
-            border-radius: 4px;
-            white-space: nowrap;
-        }
-
-        /* Stats section */
-        .stats-section {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin: 50px 0;
-            padding: 40px 30px;
-            background: linear-gradient(135deg, var(--paper-aged) 0%, var(--paper-cream) 100%);
-            border-radius: 8px;
-            border: 1px solid rgba(201, 169, 98, 0.2);
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 4.5s;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: var(--accent-rose-deep);
-            display: block;
-            line-height: 1.2;
-        }
-
-        .stat-label {
-            font-family: 'Caveat', cursive;
-            font-size: 1.1rem;
-            color: var(--ink-light);
-            margin-top: 5px;
-        }
-
-        /* Closing section */
-        .closing {
-            margin-top: 60px;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 5s;
-        }
-
-        .closing-text {
-            font-family: 'Caveat', cursive;
-            font-size: 1.8rem;
-            line-height: 1.8;
-            text-align: center;
-            color: var(--ink-primary);
-            margin-bottom: 50px;
-        }
-
-        /* Signature section */
-        .signature-section {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 60px;
-            margin-top: 40px;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 5.5s;
-        }
-
-        .signature {
-            text-align: center;
-        }
-
-        .signature-name {
-            font-family: 'Caveat', cursive;
-            font-size: 2.2rem;
-            font-weight: 600;
-            color: var(--ink-primary);
-        }
-
-        .signature-role {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
-            color: var(--ink-light);
-            font-style: italic;
-        }
-
-        /* Baby footprint */
-        .footprint {
-            width: 50px;
-            height: auto;
-            opacity: 0.7;
-        }
-
-        .footprint svg {
-            fill: var(--accent-rose);
-        }
-
-        /* Photo section */
-        .photo-section {
-            margin-top: 80px;
-            text-align: center;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 6s;
-        }
-
-        .photo-frame {
-            display: inline-block;
-            padding: 15px;
-            background: white;
-            box-shadow:
-                0 2px 20px rgba(0, 0, 0, 0.08),
-                0 0 0 1px rgba(0, 0, 0, 0.02);
-            transform: rotate(-1deg);
-            transition: transform 0.3s ease;
-        }
-
-        .photo-frame:hover {
-            transform: rotate(0deg) scale(1.02);
-        }
-
-        .photo-frame img {
-            max-width: 100%;
-            width: 400px;
-            height: auto;
-            display: block;
-        }
-
-        .photo-caption {
-            font-family: 'Caveat', cursive;
-            font-size: 1.3rem;
-            color: var(--ink-light);
-            margin-top: 20px;
-        }
-
-        /* Heart divider */
-        .heart-divider {
-            text-align: center;
-            margin: 50px 0;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 4.3s;
-        }
-
-        .heart-divider svg {
-            width: 30px;
-            height: 30px;
-            fill: var(--accent-rose);
-            animation: heartbeat 2s ease-in-out infinite;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes heartbeat {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 100px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            text-align: center;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-            animation-delay: 6.5s;
-        }
-
-        .footer-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.95rem;
-            color: var(--ink-light);
-            font-style: italic;
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .container {
-                padding: 40px 25px 80px;
-            }
-
-            .greeting {
-                font-size: 2.2rem;
-            }
-
-            .letter-body {
-                font-size: 1.1rem;
-                line-height: 2;
-            }
-
-            .stats-section {
-                grid-template-columns: 1fr;
-                gap: 25px;
-                padding: 30px 20px;
-            }
-
-            .stat-number {
-                font-size: 2rem;
-            }
-
-            .signature-section {
-                flex-direction: column;
-                gap: 30px;
-                align-items: center;
-            }
-
-            .photo-frame img {
-                width: 100%;
-            }
-
-            .fold-line {
-                display: none;
-            }
-        }
-    </style>
 </head>
 
 <body>
+    <!-- Floating Home Button -->
+    <a href="../../index.html"
+        class="fixed top-6 left-6 z-50 w-12 h-12 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white hover:bg-white/20 hover:scale-110 transition-all shadow-lg group">
+        <i class="fas fa-home text-lg group-hover:text-pink-300 transition-colors"></i>
+    </a>
     <div class="fold-line"></div>
 
     <div class="container">
@@ -427,9 +86,10 @@
 
             <p>
                 Đêm đó, mẹ gần như không ngủ được. Vừa đau, vừa lo, vừa sợ phải mổ.
-                Sáng hôm sau bác sĩ khám — vẫn chỉ <span class="highlight-number">3-4cm</span>, 
-                như thể một đêm dài chẳng có ý nghĩa gì. Nhưng mẹ không bỏ cuộc. 
-                Vẫn tiếp tục quá trình truyền thuốc kích sinh lần 2. Thêm <span class="highlight-number">7 tiếng</span> nữa 
+                Sáng hôm sau bác sĩ khám — vẫn chỉ <span class="highlight-number">3-4cm</span>,
+                như thể một đêm dài chẳng có ý nghĩa gì. Nhưng mẹ không bỏ cuộc.
+                Vẫn tiếp tục quá trình truyền thuốc kích sinh lần 2. Thêm <span class="highlight-number">7 tiếng</span>
+                nữa
                 mẹ chịu đựng từng cơn co thắt, chờ đợi, hy vọng.
             </p>
 
@@ -528,81 +188,7 @@
             </p>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Typewriter effect function
-            async function typeWriter(element, speed = 50) {
-                // Keep the original content structure but clear it from DOM
-                const originalNodes = Array.from(element.childNodes);
-                element.innerHTML = '';
-                element.style.opacity = '1';
-
-                for (const node of originalNodes) {
-                    if (node.nodeType === Node.TEXT_NODE) {
-                        const text = node.textContent;
-                        const textNode = document.createTextNode('');
-                        element.appendChild(textNode);
-                        for (const char of text) {
-                            textNode.textContent += char;
-                            await new Promise(r => setTimeout(r, speed));
-                        }
-                    } else if (node.nodeType === Node.ELEMENT_NODE) {
-                        // For elements like span, we clone the tag but type its content
-                        const clone = node.cloneNode(false); // shallow clone
-                        element.appendChild(clone);
-                        // Recursively type into the child element
-                        // We use the original node as the source of truth for content
-                        await typeWriterSource(clone, node, speed);
-                    }
-                }
-            }
-
-            // Helper to type into a destination using a source node's content
-            async function typeWriterSource(dest, source, speed) {
-                const nodes = Array.from(source.childNodes);
-                for (const node of nodes) {
-                    if (node.nodeType === Node.TEXT_NODE) {
-                        const text = node.textContent;
-                        const textNode = document.createTextNode('');
-                        dest.appendChild(textNode);
-                        for (const char of text) {
-                            textNode.textContent += char;
-                            await new Promise(r => setTimeout(r, speed));
-                        }
-                    } else if (node.nodeType === Node.ELEMENT_NODE) {
-                        const clone = node.cloneNode(false);
-                        dest.appendChild(clone);
-                        await typeWriterSource(clone, node, speed);
-                    }
-                }
-            }
-
-            // Main execution sequence
-            const greeting = document.querySelector('.greeting');
-            const paragraphs = document.querySelectorAll('.letter-body p');
-
-            // Initial state
-            greeting.style.opacity = '0';
-            paragraphs.forEach(p => p.style.opacity = '0'); // Hide initially
-
-            // 1. Reveal Date
-            const date = document.querySelector('.letter-date');
-            // Date animation is handled by CSS (fadeInUp), let's keep it or wait for it.
-            // CSS delay is 0.3s. Let's wait a bit.
-            await new Promise(r => setTimeout(r, 1000));
-
-            // 2. Type Greeting
-            greeting.style.opacity = '1';
-            await typeWriter(greeting, 70);
-
-            // 3. Type Paragraphs
-            for (const p of paragraphs) {
-                p.style.opacity = '1';
-                await typeWriter(p, 40); // Slightly faster for body text
-                await new Promise(r => setTimeout(r, 300)); // Pause between paragraphs
-            }
-        });
-    </script>
+    <script src="../../assets/js/letter.js"></script>
 </body>
 
 </html>
