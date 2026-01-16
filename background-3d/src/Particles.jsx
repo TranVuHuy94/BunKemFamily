@@ -70,10 +70,38 @@ export default function Particles({ count = 12000 }) {
         return colors
     }, [count])
 
+    // Shockwave logic
+    const shockwaveRef = useRef({ x: 9999, y: 9999, z: 9999, time: 0, active: false })
+
+    useEffect(() => {
+        const handleClick = (event) => {
+            const x = (event.clientX / window.innerWidth) * 2 - 1
+            const y = -(event.clientY / window.innerHeight) * 2 + 1
+
+            // Unproject to world position
+            const vector = new THREE.Vector3(x, y, 0)
+            vector.unproject(camera)
+            const dir = vector.sub(camera.position).normalize()
+            const distance = -camera.position.z / dir.z
+            const pos = camera.position.clone().add(dir.multiplyScalar(distance))
+
+            shockwaveRef.current = { x: pos.x, y: pos.y, z: pos.z, time: 1.0, active: true }
+        }
+
+        window.addEventListener('mouseup', handleClick)
+        return () => window.removeEventListener('mouseup', handleClick)
+    }, [camera])
+
     useFrame((state, delta) => {
         if (!mesh.current) return
 
         const time = state.clock.getElapsedTime()
+
+        // Decay shockwave
+        if (shockwaveRef.current.active) {
+            shockwaveRef.current.time -= delta * 3 // Decay speed
+            if (shockwaveRef.current.time <= 0) shockwaveRef.current.active = false
+        }
 
         let targetPos = new THREE.Vector3(0, 0, 0)
         const hasMouse = mouseRef.current.x < 2
@@ -99,7 +127,7 @@ export default function Particles({ count = 12000 }) {
             let ty = driftY
             let tz = driftZ
 
-            // 2. Repulsion (Blowing)
+            // 2. Mouse Repulsion (Blowing)
             if (hasMouse) {
                 const dx = tx - targetPos.x
                 const dy = ty - targetPos.y
@@ -108,7 +136,6 @@ export default function Particles({ count = 12000 }) {
                 const radius = 5
 
                 if (dist < radius) {
-                    // Push away
                     const force = (radius - dist) / radius
                     const strength = 4
                     const dirX = dx / dist
@@ -118,9 +145,32 @@ export default function Particles({ count = 12000 }) {
                     tx += dirX * force * strength
                     ty += dirY * force * strength
                     tz += dirZ * force * strength
-
-                    // Expand slightly when blown
                     baseScale *= 1.2
+                }
+            }
+
+            // 3. Shockwave Repulsion (Click)
+            if (shockwaveRef.current.active) {
+                const sw = shockwaveRef.current
+                const dx = tx - sw.x
+                const dy = ty - sw.y
+                const dz = tz - sw.z
+                const dist = Math.sqrt(dx * dx + dy * dy + dz * dz)
+                const radius = 15 // Big radius for explosion
+
+                if (dist < radius) {
+                    const force = (radius - dist) / radius
+                    const strength = 20 * sw.time // Strong force decaying with time
+                    const dirX = dx / dist
+                    const dirY = dy / dist
+                    const dirZ = dz / dist
+
+                    tx += dirX * force * strength
+                    ty += dirY * force * strength
+                    tz += dirZ * force * strength
+
+                    // Particles "break" (scale down or flicker)
+                    baseScale *= (1 + sw.time)
                 }
             }
 
@@ -129,7 +179,7 @@ export default function Particles({ count = 12000 }) {
             particle.y += (ty - particle.y) * 0.08
             particle.z += (tz - particle.z) * 0.08
 
-            // 3. Sparkle
+            // 4. Sparkle
             const scale = baseScale * (0.8 + 0.5 * Math.sin(time * 3 * scaleSpeed + scaleOffset))
 
             dummy.position.set(particle.x, particle.y, particle.z)
@@ -149,7 +199,6 @@ export default function Particles({ count = 12000 }) {
                 toneMapped={false}
                 transparent
                 opacity={0.8}
-            // REMOVED AdditiveBlending to ensure visibility on light background
             />
             <instancedBufferAttribute attach="geometry-attributes-color" args={[colorArray, 3]} />
         </instancedMesh>

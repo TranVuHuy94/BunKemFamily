@@ -1,5 +1,8 @@
 import { Canvas } from '@react-three/fiber'
 import Particles from './Particles'
+import FallingIcons from './FallingIcons'
+import CursorTrail from './CursorTrail'
+import PaintSplatter from './PaintSplatter'
 
 export default function App() {
     return (
@@ -10,6 +13,9 @@ export default function App() {
             style={{ background: 'transparent' }} // Transparent to show website bg color if needed
         >
             <Particles count={12000} />
+            <FallingIcons count={40} />
+            <CursorTrail />
+            <PaintSplatter />
         </Canvas>
     )
 }

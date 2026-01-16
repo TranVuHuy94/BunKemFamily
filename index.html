@@ -380,6 +380,13 @@
                 }
             }, 800);
         });
+
+        // Fix: Hide transition overlay when returning via Back button (BFCache)
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                document.getElementById('pageTransition').classList.remove('active');
+            }
+        });
     </script>
 </body>
 
